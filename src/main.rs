@@ -1,3 +1,11 @@
+use retcd::retcdmain::retcd; 
+
+
 fn main() {
-    println!("Hello, world!");
+
+    let args: Vec<String> = std::env::args().collect();
+
+    retcd::start_retcd_or_proxy(args)
+    
+
 }

@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use super::super::embed::config as EmbedC;
 
 const PROXY_FLAG_OFF: &str = "off";
 const PROXY_FLAG_READONLY: &str = "readonly";
@@ -28,11 +29,12 @@ const IGNORED: &[&str] = &[
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
-    cp : ConfigProxy,
-    cf : ConfigFlags,
-    config_file : String,
-    print_version : bool,
-    ignored : Vec<String>,
+    pub ec : EmbedC::Config,
+    pub cp : ConfigProxy,
+    pub cf : ConfigFlags,
+    pub config_file : String,
+    pub print_version : bool,
+    pub ignored : Vec<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -61,20 +63,21 @@ pub struct ConfigFlags {
 
 pub fn new_config() -> Config {
     Config {
+        ec: EmbedC::new_config(),
         cp: ConfigProxy {
-            proxy_failure_wait_ms: 0,
-            proxy_refresh_interval_ms: 0,
-            proxy_dial_timeout_ms: 0,
-            proxy_write_timeout_ms: 0,
+            proxy_failure_wait_ms: 5000,
+            proxy_refresh_interval_ms: 30000,
+            proxy_dial_timeout_ms: 1000,
+            proxy_write_timeout_ms: 5000,
             proxy_read_timeout_ms: 0,
             fallback: String::from(""),
-            proxy: String::from(""),
+            proxy: PROXY_FLAG_OFF.to_string(),
             proxy_json: String::from(""),
             fallback_json: String::from(""),
         },
         cf: ConfigFlags {},
         config_file: String::from(""),
         print_version: false,
-        ignored: Vec::new(),
+        ignored: IGNORED.iter().map(|s| s.to_string()).collect(),
     }
 }
