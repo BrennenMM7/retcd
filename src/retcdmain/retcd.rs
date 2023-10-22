@@ -43,20 +43,18 @@ pub fn start_retcd_or_proxy(args: Vec<String>) {
     let which = identify_data_dir_or_die(&configuration.ec.dir, &log);
     match which {
         DirType::DirEmpty => {
-            slog::info!(log, "No data-dir provided, using default data-dir: {}", configuration.ec.dir);
+            slog::info!(log, "Initilize and start retcd server");
+            slog::info!(log, "data-dir: {}", configuration.ec.dir);
+            slog::info!(log, "dir-type: {}", "DirEmpty");
             start_retcd();
         },
-        DirType::DirMember => {
-            slog::info!(log, "Found data-dir: {}", configuration.ec.dir);
-            start_retcd();
-        },
-        DirType::DirProxy => {
-            slog::info!(log, "Found data-dir: {}", configuration.ec.dir);
-            start_proxy();
-        },
+        _ => {
+            slog::info!(log, "server has already been initialized");
+            slog::info!(log, "data-dir: {}", configuration.ec.dir);
+            slog::info!(log, "dir-type: {}", "DirMember");
+            start_retcd()
+        }
     }
-
-
 }
 
 fn start_retcd() {}
