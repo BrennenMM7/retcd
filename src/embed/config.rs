@@ -1,10 +1,9 @@
 use serde::{Deserialize, Serialize};
 use pnet::datalink;
-use std::{net::IpAddr, str::FromStr};
+use std::net::IpAddr;
 use url::Url;
 
 const DEFAULT_INITIAL_ADVERTISE_PEER_URLS: &str = "http://localhost:2380";
-const DEFAULT_ADVERTISE_CLIENT_URLS: &str = "http://localhost:2379";
 const DEFAULT_NAME : &str = "default";
 
 #[derive(Serialize, Deserialize, Debug, Clone)]

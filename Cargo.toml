@@ -10,6 +10,6 @@ serde = { version = "1.0.189", features = ["derive"] }
 slog = "2.7.0"
 slog-term = "2.9.0"
 slog-async = "2.8.0"
-clap = "4.4.6"
 pnet = "0.34.0"
 url = "2.4.1"
+crossbeam = "0.8.2"

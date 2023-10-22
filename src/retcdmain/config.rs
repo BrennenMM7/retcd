@@ -2,12 +2,6 @@ use serde::{Deserialize, Serialize};
 use super::super::embed::config::EmbedConfig;
 
 const PROXY_FLAG_OFF: &str = "off";
-const PROXY_FLAG_READONLY: &str = "readonly";
-const PROXY_FLAG_ON: &str = "on";
-
-const FALLBACK_FLAG_EXIT: &str = "exit";
-const FALLBACK_FLAG_PROXY: &str = "proxy";
-
 const IGNORED: &[&str] = &[
     "cluster-active-size",
     "cluster-remove-delay",

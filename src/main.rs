@@ -1,5 +1,4 @@
-use retcd::retcdmain::retcd; 
-
+use retcd::retcdmain::retcd;
 
 fn main() {
 

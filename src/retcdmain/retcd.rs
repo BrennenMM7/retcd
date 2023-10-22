@@ -1,21 +1,19 @@
+// Standard library imports
 use std::fs;
 use std::path::Path;
+
+// Relative imports
 use super::config;
+use super::super::embed::config::EmbedConfig;
 
-extern crate slog;
-extern crate slog_async;
-extern crate slog_term;
-
+// External crate imports
 use slog::{Drain, Logger, o};
-
-
 
 enum DirType {
     DirEmpty,
     DirMember,
     DirProxy,
 }
-
 
 pub fn start_retcd_or_proxy(args: Vec<String>) {
 
@@ -46,20 +44,20 @@ pub fn start_retcd_or_proxy(args: Vec<String>) {
             slog::info!(log, "Initilize and start retcd server");
             slog::info!(log, "data-dir: {}", configuration.ec.dir);
             slog::info!(log, "dir-type: {}", "DirEmpty");
-            start_retcd();
+            start_retcd(&configuration.ec);
         },
         _ => {
             slog::info!(log, "server has already been initialized");
             slog::info!(log, "data-dir: {}", configuration.ec.dir);
             slog::info!(log, "dir-type: {}", "DirMember");
-            start_retcd()
+            start_retcd(&configuration.ec)
         }
     }
 }
 
-fn start_retcd() {}
-
-fn start_proxy() {}
+fn start_retcd(cfg : &EmbedConfig) {
+    let _ = crate::embed::retcd::start_retcd(cfg);
+}
 
 fn identify_data_dir_or_die(dir: &str, log : &Logger) -> DirType {
     let entries = match fs::read_dir(Path::new(dir)) {
