@@ -25,10 +25,37 @@ pub fn start_retcd_or_proxy(args: Vec<String>) {
 
     let log = slog::Logger::root(drain, o!());
 
-    let configuration = config::new_config();
-    let default_initial_cluster = configuration.ec.initial_cluster;
+    let mut configuration = config::new_config();
+    let default_initial_cluster = &configuration.ec.initial_cluster.clone();
 
     slog::info!(log, "Running: {:?}", args);
+
+    let default_host = configuration.ec.update_default_cluster_from_name(default_initial_cluster);
+    if !default_host.is_empty() {
+        slog::info!(log, "Using default host: {}", default_host);
+    }
+
+    if configuration.ec.dir == "" {
+        configuration.ec.dir = format!("{}.retcd", configuration.ec.name);
+        slog::warn!(log, "No data-dir provided, using default data-dir: {}", configuration.ec.dir);
+    }
+
+    let which = identify_data_dir_or_die(&configuration.ec.dir, &log);
+    match which {
+        DirType::DirEmpty => {
+            slog::info!(log, "No data-dir provided, using default data-dir: {}", configuration.ec.dir);
+            start_retcd();
+        },
+        DirType::DirMember => {
+            slog::info!(log, "Found data-dir: {}", configuration.ec.dir);
+            start_retcd();
+        },
+        DirType::DirProxy => {
+            slog::info!(log, "Found data-dir: {}", configuration.ec.dir);
+            start_proxy();
+        },
+    }
+
 
 }
 

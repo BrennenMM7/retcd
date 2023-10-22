@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use super::super::embed::config as EmbedC;
+use super::super::embed::config::EmbedConfig;
 
 const PROXY_FLAG_OFF: &str = "off";
 const PROXY_FLAG_READONLY: &str = "readonly";
@@ -28,8 +28,8 @@ const IGNORED: &[&str] = &[
 ];
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct Config {
-    pub ec : EmbedC::Config,
+pub struct RetcdConfig {
+    pub ec : EmbedConfig,
     pub cp : ConfigProxy,
     pub cf : ConfigFlags,
     pub config_file : String,
@@ -61,9 +61,9 @@ pub struct ConfigProxy {
 pub struct ConfigFlags {
 }
 
-pub fn new_config() -> Config {
-    Config {
-        ec: EmbedC::new_config(),
+pub fn new_config() -> RetcdConfig {
+    RetcdConfig {
+        ec: EmbedConfig::new_config(),
         cp: ConfigProxy {
             proxy_failure_wait_ms: 5000,
             proxy_refresh_interval_ms: 30000,
