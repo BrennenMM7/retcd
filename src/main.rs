@@ -1,10 +1,6 @@
-use retcd::retcdmain::retcd;
+use retcd::mvcc::backend::backend   
+
 
 fn main() {
-
-    let args: Vec<String> = std::env::args().collect();
-
-    retcd::start_retcd_or_proxy(args)
-    
 
 }
