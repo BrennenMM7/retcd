@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use jammdb::{DB, OpenOptions};
+use jammdb::DB;
 
 const DEFAULT_BATCH_LIMIT: i32 = 10000;
 const DEFAULT_BATCH_INTERVAL: Duration = Duration::from_millis(100);
@@ -25,7 +25,6 @@ pub struct BackendConfig {
     pub mlock: bool,
 }
 
-
 impl BackendConfig {
     pub fn default_backend_config(&self, path: String) -> Self {
         BackendConfig {
@@ -38,7 +37,6 @@ impl BackendConfig {
         }
     }
 }
-
 
 impl Backend {
     pub fn new(bcfg: BackendConfig) -> Self {

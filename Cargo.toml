@@ -7,4 +7,4 @@ edition = "2021"
 
 [dependencies]
 jammdb = "0.11.0"
-
+crc32fast = "1.3.2"

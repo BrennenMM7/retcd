@@ -6,3 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+jammdb = "0.11.0"
+tokio = "1.34.0"
+slog = "2.7.0"
+serde = "1.0.192"
+crossbeam-channel = "0.5.8"
+base64 = "0.21.5"
